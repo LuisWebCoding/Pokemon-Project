@@ -1,0 +1,359 @@
+/* ── 1. VARIÁVEIS GLOBAIS ─────────────────────────────── */
+:root {
+  --red:       #cc0000;
+  --red-dark:  #a00000;
+  --bg:        #f5f5f5;
+  --card-bg:   #ffffff;
+  --text:      #222222;
+  --muted:     #666666;
+  --border:    #e0e0e0;
+  --radius:    12px;
+  --shadow:    0 4px 16px rgba(0,0,0,0.10);
+
+  /* Cores por tipo */
+  --normal:   #A8A878; --fire:     #F08030; --water:    #6890F0;
+  --electric: #F8D030; --grass:    #78C850; --ice:      #98D8D8;
+  --fighting: #C03028; --poison:   #A040A0; --ground:   #E0C068;
+  --flying:   #A890F0; --psychic:  #F85888; --bug:      #A8B820;
+  --rock:     #B8A038; --ghost:    #705898; --dragon:   #7038F8;
+  --dark:     #705848; --steel:    #B8B8D0; --fairy:    #EE99AC;
+}
+
+/* ── 2. RESET BÁSICO ──────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── 3. CABEÇALHO ─────────────────────────────────────── */
+header {
+  background: var(--red);
+  color: #fff;
+  text-align: center;
+  padding: 24px 16px 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+header h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+header p {
+  font-size: 0.9rem;
+  opacity: 0.85;
+  margin-top: 4px;
+}
+
+/* ── 4. ÁREA PRINCIPAL ────────────────────────────────── */
+main {
+  flex: 1;
+  padding: 24px 16px;
+  max-width: 480px;     
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ── 5. BUSCA ─────────────────────────────────────────── */
+.search-section {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.search-section input {
+  flex: 1;
+  padding: 12px 14px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.search-section input:focus {
+  border-color: var(--red);
+  min-height: 48px;
+}
+
+.search-section button {
+  padding: 12px 20px;
+  background: var(--red);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+  min-height: 48px;
+}
+
+.search-section button:hover {
+  background: var(--red-dark);
+}
+
+/* ── 6. ESTADOS: ERRO / LOADING ───────────────────────── */
+.hidden { display: none !important; }
+
+.error {
+  color: var(--red);
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 32px 0;
+  color: var(--muted);
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid var(--border);
+  border-top-color: var(--red);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── 7. CARD DO POKÉMON ───────────────────────────────── */
+.card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Cabeçalho do card */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px 0;
+}
+
+.poke-name {
+  font-size: 1.6rem;
+  font-weight: 800;
+  text-transform: capitalize;
+}
+
+.poke-id {
+  font-size: 1rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/* Sprite / Imagem */
+#pokeImg {
+  display: block;
+  width: 160px;
+  height: 160px;
+  object-fit: contain;
+  margin: 8px auto;
+  image-rendering: pixelated; 
+}
+
+/* ── 8. TIPOS ─────────────────────────────────────────── */
+.types {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 4px 16px 12px;
+}
+
+.type-badge {
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Cada tipo usa sua variável de cor */
+.type-normal   { background: var(--normal);   }
+.type-fire     { background: var(--fire);     }
+.type-water    { background: var(--water);    }
+.type-electric { background: var(--electric); color: #333; }
+.type-grass    { background: var(--grass);    }
+.type-ice      { background: var(--ice);      color: #333; }
+.type-fighting { background: var(--fighting); }
+.type-poison   { background: var(--poison);   }
+.type-ground   { background: var(--ground);   color: #333; }
+.type-flying   { background: var(--flying);   }
+.type-psychic  { background: var(--psychic);  }
+.type-bug      { background: var(--bug);      }
+.type-rock     { background: var(--rock);     }
+.type-ghost    { background: var(--ghost);    }
+.type-dragon   { background: var(--dragon);   }
+.type-dark     { background: var(--dark);     }
+.type-steel    { background: var(--steel);    color: #333; }
+.type-fairy    { background: var(--fairy);    }
+
+/* ── 9. DETALHES RÁPIDOS ──────────────────────────────── */
+.details {
+  display: flex;
+  justify-content: space-around;
+  padding: 12px 16px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.detail-item .label {
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.detail-item span:last-child {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* ── 10. ATRIBUTOS (stats) ────────────────────────────── */
+.stats {
+  padding: 16px 20px;
+}
+
+.stats h3,
+.abilities h3 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.stats ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stats li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.stat-label {
+  width: 90px;
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-transform: capitalize;
+  flex-shrink: 0;
+}
+
+/* Barra de progresso do stat */
+.stat-bar-bg {
+  flex: 1;
+  height: 8px;
+  background: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.stat-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  background: var(--red);
+  transition: width 0.5s ease;
+}
+
+.stat-value {
+  width: 30px;
+  text-align: right;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+/* ── 11. HABILIDADES ──────────────────────────────────── */
+.abilities {
+  padding: 0 20px 20px;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+
+.ability-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ability-badge {
+  padding: 5px 12px;
+  border: 2px solid var(--border);
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  color: var(--text);
+}
+
+.ability-badge.hidden-ability {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+/* ── 12. RODAPÉ ───────────────────────────────────────── */
+footer {
+  text-align: center;
+  padding: 16px;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+footer a {
+  color: var(--red);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* ── 13. RESPONSIVIDADE ───────────────────────────────── */
+@media (min-width: 600px) {
+  main {
+    padding: 32px 24px;
+  }
+
+  #pokeImg {
+    width: 200px;
+    height: 200px;
+  }
+}

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pokédex PWA</title>
+  
+  <meta name="description" content="Pokédex PWA interativa para busca de Pokémon." />
+  <meta name="theme-color" content="#cc0000" />
+  <link rel="preconnect" href="https://pokeapi.co" />
+  
+  <link rel="manifest" href="./manifest.json" />
+  
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+  <body>
+
+    <!-- CABEÇALHO -->
+    <header>
+      <h1>Pokédex</h1>
+      <p>Busque qualquer Pokémon pelo nome ou número</p>
+    </header>
+
+    <!-- ÁREA PRINCIPAL -->
+    <main>
+
+      <!-- BARRA DE BUSCA -->
+      <section class="search-section">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Ex: pikachu ou 25"
+          autocomplete="off"
+          aria-label="Digite o nome ou número do Pokémon"
+        />
+        <button id="searchBtn">Buscar</button>
+      </section>
+
+      <!-- MENSAGEM DE ERRO -->
+      <p id="errorMsg" class="error hidden">
+        Pokémon não encontrado. Tente outro nome ou número.
+      </p>
+
+      <!-- LOADING -->
+      <div id="loading" class="loading hidden">
+        <div class="spinner"></div>
+        <p>Buscando...</p>
+      </div>
+
+      <!-- CARD DO POKÉMON -->
+      <section id="card" class="card hidden">
+
+        <div class="card-header">
+          <span id="pokeName" class="poke-name"></span>
+          <span id="pokeId"   class="poke-id"></span>
+        </div>
+
+        <img id="pokeImg" src="" alt="Sprite do Pokémon" />
+
+        <!-- TIPOS -->
+        <div id="pokeTypes" class="types"></div>
+
+        <!-- DETALHES RÁPIDOS -->
+        <div class="details">
+          <div class="detail-item">
+            <span class="label">Altura</span>
+            <span id="pokeHeight"></span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Peso</span>
+            <span id="pokeWeight"></span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Exp. base</span>
+            <span id="pokeExp"></span>
+          </div>
+        </div>
+
+        <!-- ATRIBUTOS (stats) -->
+        <div class="stats">
+          <h3>Atributos</h3>
+          <ul id="pokeStats"></ul>
+        </div>
+
+        <!-- HABILIDADES -->
+        <div class="abilities">
+          <h3>Habilidades</h3>
+          <div id="pokeAbilities"></div>
+        </div>
+
+      </section>
+    </main>
+
+    <footer>
+      <p>Dados: <a href="https://pokeapi.co" target="_blank">PokéAPI</a></p>
+    </footer>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>
